@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Self Roles</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="index"></div>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>ID</th>
+            <th>Role ID</th>
+            <th>Emoji Name</th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${roles.empty}">
+            <td colspan="2">No self roles saved</td>
+        </tr>
+        <tr th:each="role : ${roles}">
+        	<td><span th:text="${role.id}"></span></td>
+            <td><span th:text="${role.roleId}"></span></td>
+            <td><span th:text="${role.emojiName}"></span></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

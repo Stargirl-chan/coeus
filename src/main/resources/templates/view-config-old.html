@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bot Config</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="index"></div>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>Config ID</th>
+        	<th>Config Property ID</th>
+            <th>Support Channel</th>
+            <th>Conveyance Channels</th>
+            <th>Blacklisted Conveyance Channels</th>
+            <th>Welcome Channel</th>
+            <th>Verified Role</th>
+            <th>Moderator Role</th>
+            <th>Welcome Messages</th>
+            <th>Harold Emoji</th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${properties.empty}">
+            <td colspan="2">No config saved</td>
+        </tr>
+        <tr th:each="property : ${properties}">
+        	<td><span th:text="${property.configId}"></span></td>
+        	<td><span th:text="${property.configPropertiesId}"></span></td>
+            <td><span th:text="${property.supportChannel}"></span></td>
+            <td><span th:text="${property.conveyanceChannel}"></span></td>
+            <td><span th:text="${property.conveyanceBlacklistChannel}"></span></td>
+            <td><span th:text="${property.welcomeChannel}"></span></td>
+            <td><span th:text="${property.verifiedRole}"></span></td>
+            <td><span th:text="${property.moderatorRole}"></span></td>
+            <td><span th:text="${property.welcomeMessage}"></span></td>
+            <td><span th:text="${property.haroldEmoji}"></span></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

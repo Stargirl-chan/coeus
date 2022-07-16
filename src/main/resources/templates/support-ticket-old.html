@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Tickets</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:insert="index"></div>
+<div id="main">
+	<table class="styled-table">
+	    <thead>
+	        <tr>
+	            <th>Incident ID</th>
+	            <th>Thread ID</th>
+	            <th>User ID</th>
+	            <th>Incident Time</th>
+	            <th>Incident Title</th>
+	            <th>Incident Solved</th>
+	            <th>Unarchivals</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+		<tr th:if="${tickets.empty}">
+	            <td colspan="2">No Tickets Available</td>
+	        </tr>
+	        <tr th:each="ticket : ${tickets}">
+	            <td><span th:text="${ticket.incidentId}"></span></td>
+	            <td><span th:text="${ticket.threadId}"></span></td>
+	            <td><span th:text="${ticket.userId}"></span></td>
+	            <td><span th:text="${ticket.incidentTime}"></span></td>
+	            <td><span th:text="${ticket.incidentTitle}"></span></td>
+	            <td><span th:text="${ticket.incidentSolved}"></span></td>
+	            <td><span th:text="${ticket.unarchivals}"></span></td>
+	        </tr>
+	    </tbody>
+	</table>
+</div>
+</body>
+</html>

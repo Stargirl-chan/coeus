@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+	<title>Coeus</title>
+	<link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+	<div id="sidenav" class="sidenav">
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	  <a href="/">Index</a>
+	  <a href="support-tickets">Support Tickets</a>
+	  <a href="bad-words">Bad Words</a>
+	  <a href="bot-config-properties">Bot Config Properties</a>
+	  <a href="view-config">Bot Config View</a>
+	  <a href="self-roles">Self Roles</a>
+	  <a href="easter-eggs">Easter Egg Gifs</a>
+	  <a href="webhooks">Webhooks</a>
+	  <a href="emoji-cache-messages">Emoji Cache Messages</a>
+	  <a href="emoji-cache">Emoji Cache</a>
+	  <a href="emoji-cache-channels">Emoji Cache Channels</a>
+	  <a href="conveyance-blacklist-channel">Conveyance Blacklist Channel</a>
+	  <a href="conveyance-channel">Conveyance Channel</a>
+	  <a href="harold-emoji">Harold Emoji</a>
+	  <a href="welcome-message">Welcome Message</a>
+	  <a href="message-cache">Message Cache</a>
+	</div>
+	
+	<div id="main">
+	  <h2>Sidenav Test</h2>
+	  <p>Just some test</p>
+	  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+	</div>
+
+	<script>
+	function openNav() {
+	  document.getElementById("sidenav").style.width = "250px";
+	  document.getElementById("main").style.marginLeft = "250px";
+	  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+	}
+	
+	function closeNav() {
+	  document.getElementById("sidenav").style.width = "0";
+	  document.getElementById("main").style.marginLeft= "0";
+	  document.body.style.backgroundColor = "white";
+	}
+	</script>
+</body>
+</html>

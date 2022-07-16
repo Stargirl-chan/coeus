@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Cache</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="index"></div>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>ID</th>
+            <th>Message ID</th>
+            <th>Channel ID</th>
+            <th>User ID</th>
+            <th>Message Time</th>
+            <th>Content</th>
+            <th>Attachments</th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${items.empty}">
+            <td colspan="2">No items in cache</td>
+        </tr>
+        <tr th:each="item : ${items}">
+        	<td><span th:text="${item.id}"></span></td>
+            <td><span th:text="${item.messageId}"></span></td>
+            <td><span th:text="${item.channelId}"></span></td>
+            <td><span th:text="${item.userId}"></span></td>
+            <td><span th:text="${item.messageTime}"></span></td>
+            <td><span th:text="${item.content}"></span></td>
+            <td><span th:text="${item.attachments}"></span></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

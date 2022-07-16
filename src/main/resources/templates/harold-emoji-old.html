@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Harold Emojis</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="index"></div>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${emojis.empty}">
+            <td colspan="2">No harold emojis saved</td>
+        </tr>
+        <tr th:each="emoji : ${emojis}">
+        	<td><span th:text="${emoji.id}"></span></td>
+            <td><span th:text="${emoji.name}"></span></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

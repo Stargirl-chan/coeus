@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Self Roles</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="index"></div>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>User ID</th>
+        	<th>Emoji Name</th>
+            <th>Emoji Count</th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${items.empty}">
+            <td colspan="2">No emojis cached</td>
+        </tr>
+        <tr th:each="item : ${items}">
+        	<td><span th:text="${item.userId}"></span></td>
+        	<td><span th:text="${item.emojiName}"></span></td>
+            <td><span th:text="${item.emojiCount}"></span></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

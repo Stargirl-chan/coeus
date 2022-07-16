@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Conveyance Channels</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="index"></div>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>ID</th>
+            <th>Channel ID</th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${channels.empty}">
+            <td colspan="2">No conveyance channels saved</td>
+        </tr>
+        <tr th:each="channel : ${channels}">
+        	<td><span th:text="${channel.id}"></span></td>
+            <td><span th:text="${channel.channelId}"></span></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
