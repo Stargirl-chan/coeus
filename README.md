@@ -28,3 +28,6 @@ Simply execute the jar file with Java
 ```
 java -jar coeus-VERSION.jar
 ```
+
+## Related Project
+[TTC Bot](https://github.com/TheTerminalCafe/ttc-bot)
