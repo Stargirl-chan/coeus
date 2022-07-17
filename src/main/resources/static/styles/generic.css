@@ -95,17 +95,7 @@
   background-color: #ddd;
 }
 
-#main {
-  transition: margin-left .5s;
-  padding: 16px;
-}
-
-#styled-table {
-  transition: margin-left .5s;
-  padding: 16px;
-}
-
-#table-pagination {
+#main, #styled-table, #table-pagination {
   transition: margin-left .5s;
   padding: 16px;
 }
@@ -113,4 +103,20 @@
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+
+
+tr {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+}
+
+.hide-row {
+   display: none;
+}
+
+.expanded-row-content {
+   display: grid;
+   grid-column: 1/-1;
 }
