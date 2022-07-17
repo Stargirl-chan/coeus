@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
-	<table class="styled-table">
+	<table class="styled-table" id="styled-table">
 	    <thead>
 	        <tr>
 	            <th th:each="header : ${tableHeaders}" th:text="${header}"></th>
@@ -11,14 +11,16 @@
 		<tr th:if="${tablePage.empty}">
 	            <td colspan="2">No values saved</td>
 	        </tr>
-	        <tr th:each="word, iStat : ${tablePage.content}">
+	        <!-- <tr th:each="word, iStat : ${tablePage.content}">
 	            <td><span th:text="${word.id}"></span></td>
 	            <td><span th:text="${word.word}"></span></td>
-	        </tr>
+	        </tr> -->
+	        <tr th:each="pageItem, iStat : ${tablePage.content}">
+	        <td th:each="item : ${pageItem}"><span th:text="${item.value}"></span></td>
 	    </tbody>
 	</table>
 	
-	<div class="table-pagination">
+	<div class="table-pagination" id="table-pagination">
 	    <div class="pagination">
 	        <div th:class="${tablePage.number eq 0} ? 'disabled' : ''">
 	            <a th:if="${not tablePage.first}" th:href="@{${requestMappingUrl}(page=${tablePage.number},size=${tablePage.size})}">Previous</a>
