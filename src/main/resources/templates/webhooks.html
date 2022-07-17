@@ -6,51 +6,7 @@
     <link th:href="@{/styles/generic.css}" rel="stylesheet" />
 </head>
 <body>
-<div th:replace="index"></div>
-<!-- <div th:replace="styled-table"></div> -->
-	<table class="styled-table">
-	    <thead>
-	        <tr>
-	            <th th:each="header : ${tableHeaders}" th:text="${header}"></th>
-	        </tr>
-	    </thead>
-    <tbody>
-	<tr th:if="${tablePage.empty}">
-            <td colspan="2">No webhooks saved</td>
-        </tr>
-        <tr th:each="hook : ${tablePage.content}">
-        	<td><span th:text="${hook.channelId}"></span></td>
-            <td><span th:text="${hook.webhookUrl}"></span></td>
-        </tr>
-    </tbody>
-	</table>
-	
-	<div class="table-pagination">
-	    <div class="pagination">
-	        <div th:class="${tablePage.number eq 0} ? 'disabled' : ''">
-	            <a th:if="${not tablePage.first}" th:href="@{${requestMappingUrl}(page=${tablePage.number},size=${tablePage.size})}">Previous</a>
-	            <a th:if="${tablePage.first}" href="javascript:void(0);">Previous</a>
-	        </div>
-	        <div th:each="pageNo : ${#numbers.sequence(0, tablePage.totalPages - 1)}" th:class="${tablePage.number eq pageNo}? 'active' : ''">
-	            <a th:if="${tablePage.number  eq pageNo}" href="javascript:void(0);">
-	                <span th:text="${pageNo + 1}"></span>
-	            </a>
-	            <th:block th:if="${not (pageNo > 3)}">
-	            	<a th:if="${not (tablePage.number eq pageNo)}" th:href="@{${requestMappingUrl}(page=${pageNo + 1},size=${tablePage.size})}">
-	                	<span th:text="${pageNo + 1}"></span>
-	            	</a>
-	            </th:block>
-	            <th:block th:if="${not (pageNo <= tablePage.totalPages - 4)}">
-	            	<a th:if="${not (tablePage.number eq pageNo)}" th:href="@{${requestMappingUrl}(page=${pageNo + 1},size=${tablePage.size})}">
-	                	<span th:text="${pageNo + 1}"></span>
-	            	</a>
-	            </th:block>
-	        </div>
-	        <div th:class="${tablePage.number + 1 ge tablePage.totalPages} ? 'disabled' : ''">
-	            <a th:if="${not tablePage.last}" th:href="@{${requestMappingUrl}(page=${tablePage.number + 2},size=${tablePage.size})}">Next</a>
-	            <a th:if="${tablePage.last}" href="javascript:void(0);">Next</a>
-	        </div>
-	    </div>
-	</div>
+<div th:replace="side-nav"></div>
+<div th:replace="styled-table"></div>
 </body>
 </html>
