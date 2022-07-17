@@ -270,4 +270,5 @@ AS SELECT tc.id AS config_id,
      FULL JOIN ttc_conveyance_blacklist_channel tcbc ON tc.conveyance_blacklist_id = tcbc.id
      FULL JOIN ttc_conveyance_channel tcc ON tc.conveyance_id = tcc.id
      FULL JOIN ttc_harold_emoji the ON tc.harold_emoji_id = the.id
-     FULL JOIN ttc_welcome_message twm ON tc.welcome_message_id = twm.id;
+     FULL JOIN ttc_welcome_message twm ON tc.welcome_message_id = twm.id
+   ORDER BY tc.id ASC;
