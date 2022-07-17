@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/8.1.1/cash.min.js"></script>
+</head>
 <body>
 	<table class="styled-table" id="styled-table">
 	    <thead>
@@ -11,12 +14,11 @@
 		<tr th:if="${tablePage.empty}">
 	            <td colspan="2">No values saved</td>
 	        </tr>
-	        <!-- <tr th:each="word, iStat : ${tablePage.content}">
-	            <td><span th:text="${word.id}"></span></td>
-	            <td><span th:text="${word.word}"></span></td>
-	        </tr> -->
-	        <tr th:each="pageItem, iStat : ${tablePage.content}">
-	        <td th:each="item : ${pageItem}"><span th:text="${item.value}"></span></td>
+            <th:block th:each="pageItem, iStat : ${tablePage.content}">
+                <tr onclick='toggleRow(this)'>
+                <td th:each="item : ${pageItem}"><span th:text="${item.value}"></span></td>
+                <tr class="expandable-row hide-row"><td>Placeholder</td></tr>
+            </th:block>
 	    </tbody>
 	</table>
 	
@@ -48,14 +50,15 @@
 	    </div>
 	</div>
 	
-	<!--
-	<div th:if="${badWordPage.totalPages > 0}" class="pagination tablenav"
-	    th:each="pageNumber : ${pageNumbers}">
-	    <a th:href="@{/bad-words2(size=${badWordPage.size}, page=${pageNumber})}"
-	        th:text=${pageNumber}
-	        th:class="${pageNumber==badWordPage.number + 1} ? active"></a>
-	</div>
-	-->
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	function toggleRow(_this) {
+		let tr = $(_this).closest("tr");
+		let rowindex = tr.index();
+		document.getElementsByClassName("expandable-row")[tr.index() / 2].classList.toggle('hide-row');
+	}
+	/*]]>*/
+	</script>
 
 </body>
 </html>

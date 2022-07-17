@@ -32,7 +32,8 @@
 	  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Navigation</span>
 	</div>
 
-	<script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
 	function openNav() {
 	  document.getElementById("sidenav").style.width = "250px";
 	  document.getElementById("main").style.marginLeft = "250px";
@@ -48,6 +49,7 @@
 	  document.getElementById("table-pagination").style.marginLeft = "0";
 	  document.body.style.backgroundColor = "white";
 	}
+	/*]]>*/
 	</script>
 </body>
 </html>
