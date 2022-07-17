@@ -20,6 +20,10 @@
     padding: 12px 15px;
 }
 
+.styled-table th {
+	text-align: center;
+}
+
 .styled-table tbody tr {
     border-bottom: thin solid #dddddd;
 }
@@ -48,6 +52,7 @@
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  white-space: nowrap;
 }
 
 .sidenav a {
@@ -91,6 +96,16 @@
 }
 
 #main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+#styled-table {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+#table-pagination {
   transition: margin-left .5s;
   padding: 16px;
 }
