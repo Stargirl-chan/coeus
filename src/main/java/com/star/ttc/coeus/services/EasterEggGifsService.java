@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.IEasterEggGifsService;
 import com.star.ttc.coeus.models.EasterEggGifs;
 import com.star.ttc.coeus.repositories.EasterEggGifsRepository;
 
 @Service
-public class EasterEggGifsService implements IEasterEggGifsService {
+public class EasterEggGifsService extends MasterService implements IEasterEggGifsService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(EasterEggGifsService.class);
 	
 	@Autowired
 	private EasterEggGifsRepository repository;
@@ -44,27 +44,35 @@ public class EasterEggGifsService implements IEasterEggGifsService {
 	}
 	
 	@Override
-	public Page<EasterEggGifs> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<EasterEggGifs> eggs = repository.findAll();
+        List<Map<String, Object>> eggsMap = new ArrayList<>();
+		try {
+			eggsMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Number of easter eggs: " + eggs.size());
+        logger.info("Number of easter eggs: " + eggsMap.size());
         
-        List<EasterEggGifs> list;
+        List<Map<String, Object>> list;
 
-        if (eggs.size() < startItem) {
+        if (eggsMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, eggs.size());
-            list = eggs.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, eggsMap.size());
+            list = eggsMap.subList(startItem, toIndex);
         }
 
-        Page<EasterEggGifs> easterEggGifsPage
-          = new PageImpl<EasterEggGifs>(list, PageRequest.of(currentPage, pageSize), eggs.size());
+        Page<Map<String, Object>> easterEggGifsPage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), eggsMap.size());
 
         return easterEggGifsPage;
     }
+	
+
 }

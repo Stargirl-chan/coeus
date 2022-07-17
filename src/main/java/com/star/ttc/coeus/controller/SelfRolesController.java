@@ -2,6 +2,7 @@ package com.star.ttc.coeus.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.ISelfRolesService;
-import com.star.ttc.coeus.models.MessageCache;
-import com.star.ttc.coeus.models.SelfRoles;
 
 @Controller
 public class SelfRolesController {
@@ -59,7 +58,7 @@ public class SelfRolesController {
         model.addAttribute("requestMappingUrl", requestMappingUrl);
         
         
-        Page<SelfRoles> selfRolesPage = selfRolesService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Map<String, Object>> selfRolesPage = selfRolesService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", selfRolesPage);
 

@@ -1,13 +1,11 @@
 package com.star.ttc.coeus.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IBadWordService;
-import com.star.ttc.coeus.models.BadWord;
 
 @Controller
 public class BadWordController {
@@ -59,7 +56,7 @@ public class BadWordController {
         
         model.addAttribute("requestMappingUrl", requestMappingUrl);
         
-        Page<BadWord> badWordPage = badWordService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Map<String, Object>> badWordPage = badWordService.findPaginated(PageRequest.of(currentPage - 1, pageSize));  
 
         model.addAttribute("tablePage", badWordPage);
 

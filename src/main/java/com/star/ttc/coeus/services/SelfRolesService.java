@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.ISelfRolesService;
 import com.star.ttc.coeus.models.SelfRoles;
 import com.star.ttc.coeus.repositories.SelfRolesRepository;
 
 @Service
-public class SelfRolesService implements ISelfRolesService {
+public class SelfRolesService extends MasterService implements ISelfRolesService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(SelfRolesService.class);
 	
 	@Autowired
 	private SelfRolesRepository repository;
@@ -44,27 +44,35 @@ public class SelfRolesService implements ISelfRolesService {
 	}
 	
 	@Override
-	public Page<SelfRoles> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<SelfRoles> roles = repository.findAll();
+        List<Map<String, Object>> rolesMap = new ArrayList<>();
+		try {
+			rolesMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Number of self roles: " + roles.size());
+        logger.info("Number of self roles: " + rolesMap.size());
         
-        List<SelfRoles> list;
+        List<Map<String, Object>> list;
 
-        if (roles.size() < startItem) {
+        if (rolesMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, roles.size());
-            list = roles.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, rolesMap.size());
+            list = rolesMap.subList(startItem, toIndex);
         }
 
-        Page<SelfRoles> selfRolesPage
-          = new PageImpl<SelfRoles>(list, PageRequest.of(currentPage, pageSize), roles.size());
+        Page<Map<String, Object>> selfRolesPage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), rolesMap.size());
 
         return selfRolesPage;
     }
+	
+
 }

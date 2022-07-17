@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.ISupportTicketService;
 import com.star.ttc.coeus.models.SupportTicket;
 import com.star.ttc.coeus.repositories.SupportTicketRepository;
 
 @Service
-public class SupportTicketService implements ISupportTicketService {
+public class SupportTicketService extends MasterService implements ISupportTicketService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(SupportTicketService.class);
 	
 	@Autowired
 	private SupportTicketRepository repository;
@@ -44,27 +44,35 @@ public class SupportTicketService implements ISupportTicketService {
 	}
 	
 	@Override
-	public Page<SupportTicket> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<SupportTicket> tickets = repository.findAll();
+        List<Map<String, Object>> ticketsMap = new ArrayList<>();
+		try {
+			ticketsMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Number of support tickets: " + tickets.size());
+        logger.info("Number of support tickets: " + ticketsMap.size());
         
-        List<SupportTicket> list;
+        List<Map<String, Object>> list;
 
-        if (tickets.size() < startItem) {
+        if (ticketsMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, tickets.size());
-            list = tickets.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, ticketsMap.size());
+            list = ticketsMap.subList(startItem, toIndex);
         }
 
-        Page<SupportTicket> supportTicketPage
-          = new PageImpl<SupportTicket>(list, PageRequest.of(currentPage, pageSize), tickets.size());
+        Page<Map<String, Object>> supportTicketPage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), ticketsMap.size());
 
         return supportTicketPage;
     }
+	
+
 }

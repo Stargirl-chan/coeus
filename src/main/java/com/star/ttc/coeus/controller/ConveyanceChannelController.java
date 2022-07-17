@@ -2,6 +2,7 @@ package com.star.ttc.coeus.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IConveyanceChannelService;
-import com.star.ttc.coeus.models.ConveyanceChannel;
 
 @Controller
 public class ConveyanceChannelController {
@@ -58,7 +58,7 @@ public class ConveyanceChannelController {
         model.addAttribute("requestMappingUrl", requestMappingUrl);
         
         
-        Page<ConveyanceChannel> conveyanceChannelPage = conveyanceChannelService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Map<String, Object>> conveyanceChannelPage = conveyanceChannelService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", conveyanceChannelPage);
 

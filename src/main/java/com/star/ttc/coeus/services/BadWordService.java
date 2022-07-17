@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.IBadWordService;
 import com.star.ttc.coeus.models.BadWord;
 import com.star.ttc.coeus.repositories.BadWordRepository;
 
 @Service
-public class BadWordService implements IBadWordService {
+public class BadWordService extends MasterService implements IBadWordService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(BadWordService.class);
 	
 	@Autowired
 	private BadWordRepository repository;
@@ -44,26 +44,31 @@ public class BadWordService implements IBadWordService {
 	}
 	
 	@Override
-	public Page<BadWord> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
+        int startItem = currentPage * pageSize;  
         
-        List<BadWord> words = repository.findAll();
+        List<Map<String, Object>> wordsMap = new ArrayList<>();
+		try {
+			wordsMap = getObjectList(repository);
+	        logger.info("Number of bad words: " + wordsMap.size());
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Number of bad words: " + words.size());
-        
-        List<BadWord> list;
+        List<Map<String, Object>> list;
 
-        if (words.size() < startItem) {
+        if (wordsMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, words.size());
-            list = words.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, wordsMap.size());
+            list = wordsMap.subList(startItem, toIndex);
         }
 
-        Page<BadWord> badWordPage
-          = new PageImpl<BadWord>(list, PageRequest.of(currentPage, pageSize), words.size());
+        Page<Map<String, Object>> badWordPage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), wordsMap.size());
 
         return badWordPage;
     }

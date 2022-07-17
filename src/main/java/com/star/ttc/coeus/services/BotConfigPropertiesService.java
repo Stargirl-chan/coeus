@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.IBotConfigPropertiesService;
 import com.star.ttc.coeus.models.BotConfigProperties;
 import com.star.ttc.coeus.repositories.BotConfigPropertiesRepository;
 
 @Service
-public class BotConfigPropertiesService implements IBotConfigPropertiesService {
+public class BotConfigPropertiesService extends MasterService implements IBotConfigPropertiesService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(BotConfigPropertiesService.class);
 	
 	@Autowired
 	private BotConfigPropertiesRepository repository;
@@ -44,27 +44,35 @@ public class BotConfigPropertiesService implements IBotConfigPropertiesService {
 	}
 	
 	@Override
-	public Page<BotConfigProperties> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<BotConfigProperties> properties = repository.findAll();
+        List<Map<String, Object>> propertiesMap = new ArrayList<>();
+		try {
+			propertiesMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Number of config properties: " + properties.size());
+        logger.info("Number of config properties: " + propertiesMap.size());
         
-        List<BotConfigProperties> list;
+        List<Map<String, Object>> list;
 
-        if (properties.size() < startItem) {
+        if (propertiesMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, properties.size());
-            list = properties.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, propertiesMap.size());
+            list = propertiesMap.subList(startItem, toIndex);
         }
 
-        Page<BotConfigProperties> configPropertyPage
-          = new PageImpl<BotConfigProperties>(list, PageRequest.of(currentPage, pageSize), properties.size());
+        Page<Map<String, Object>> configPropertyPage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), propertiesMap.size());
 
         return configPropertyPage;
     }
+	
+
 }

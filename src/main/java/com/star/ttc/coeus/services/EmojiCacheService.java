@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.IEmojiCacheService;
 import com.star.ttc.coeus.models.EmojiCache;
 import com.star.ttc.coeus.repositories.EmojiCacheRepository;
 
 @Service
-public class EmojiCacheService implements IEmojiCacheService {
+public class EmojiCacheService extends MasterService implements IEmojiCacheService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(EmojiCacheService.class);
 	
 	@Autowired
 	private EmojiCacheRepository repository;
@@ -44,27 +44,35 @@ public class EmojiCacheService implements IEmojiCacheService {
 	}
 	
 	@Override
-	public Page<EmojiCache> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<EmojiCache> items = repository.findAll();
+        List<Map<String, Object>> itemsMap = new ArrayList<>();
+		try {
+			itemsMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Size of emoji cache: " + items.size());
+        logger.info("Size of emoji cache: " + itemsMap.size());
         
-        List<EmojiCache> list;
+        List<Map<String, Object>> list;
 
-        if (items.size() < startItem) {
+        if (itemsMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, items.size());
-            list = items.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, itemsMap.size());
+            list = itemsMap.subList(startItem, toIndex);
         }
 
-        Page<EmojiCache> emojiCachePage
-          = new PageImpl<EmojiCache>(list, PageRequest.of(currentPage, pageSize), items.size());
+        Page<Map<String, Object>> emojiCachePage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
 
         return emojiCachePage;
     }
+	
+
 }

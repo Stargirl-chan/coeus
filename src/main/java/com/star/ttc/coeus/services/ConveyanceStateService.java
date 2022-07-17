@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.IConveyanceStateService;
 import com.star.ttc.coeus.models.ConveyanceState;
 import com.star.ttc.coeus.repositories.ConveyanceStateRepository;
 
 @Service
-public class ConveyanceStateService implements IConveyanceStateService {
+public class ConveyanceStateService extends MasterService implements IConveyanceStateService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConveyanceStateService.class);
 	
 	@Autowired
 	private ConveyanceStateRepository repository;
@@ -44,27 +44,35 @@ public class ConveyanceStateService implements IConveyanceStateService {
 	}
 	
 	@Override
-	public Page<ConveyanceState> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<ConveyanceState> states = repository.findAll();
+        List<Map<String, Object>> statesMap = new ArrayList<>();
+		try {
+			statesMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Size of conveyance state: " + states.size());
+        logger.info("Size of conveyance state: " + statesMap.size());
         
-        List<ConveyanceState> list;
+        List<Map<String, Object>> list;
 
-        if (states.size() < startItem) {
+        if (statesMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, states.size());
-            list = states.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, statesMap.size());
+            list = statesMap.subList(startItem, toIndex);
         }
 
-        Page<ConveyanceState> conveyanceStatePage
-          = new PageImpl<ConveyanceState>(list, PageRequest.of(currentPage, pageSize), states.size());
+        Page<Map<String, Object>> conveyanceStatePage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), statesMap.size());
 
         return conveyanceStatePage;
     }
+	
+
 }

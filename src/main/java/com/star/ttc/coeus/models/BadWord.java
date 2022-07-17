@@ -1,6 +1,5 @@
 package com.star.ttc.coeus.models;
 
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 import lombok.Getter;
 

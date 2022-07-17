@@ -2,6 +2,7 @@ package com.star.ttc.coeus.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IEmojiCacheService;
-import com.star.ttc.coeus.models.EmojiCache;
 
 @Controller
 public class EmojiCacheController {
@@ -58,7 +58,7 @@ public class EmojiCacheController {
         model.addAttribute("requestMappingUrl", requestMappingUrl);
         
         
-        Page<EmojiCache> emojiCachePage = emojiCacheService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Map<String, Object>> emojiCachePage = emojiCacheService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", emojiCachePage);
 

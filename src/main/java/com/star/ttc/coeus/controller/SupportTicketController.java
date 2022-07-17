@@ -2,6 +2,7 @@ package com.star.ttc.coeus.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.ISupportTicketService;
-import com.star.ttc.coeus.models.SelfRoles;
 import com.star.ttc.coeus.models.SupportTicket;
 
 @Controller
@@ -81,7 +81,7 @@ public class SupportTicketController {
         model.addAttribute("requestMappingUrl", requestMappingUrl);
         
         
-        Page<SupportTicket> supportTicketPage = supportTicketService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Map<String, Object>> supportTicketPage = supportTicketService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", supportTicketPage);
 

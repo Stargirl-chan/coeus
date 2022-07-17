@@ -3,6 +3,7 @@ package com.star.ttc.coeus.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.star.ttc.coeus.CoeusApplication;
 import com.star.ttc.coeus.interfaces.IConveyanceBlacklistChannelService;
 import com.star.ttc.coeus.models.ConveyanceBlacklistChannel;
 import com.star.ttc.coeus.repositories.ConveyanceBlacklistChannelRepository;
 
 @Service
-public class ConveyanceBlacklistChannelService implements IConveyanceBlacklistChannelService {
+public class ConveyanceBlacklistChannelService extends MasterService implements IConveyanceBlacklistChannelService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConveyanceBlacklistChannelService.class);
 	
 	@Autowired
 	private ConveyanceBlacklistChannelRepository repository;
@@ -44,27 +44,35 @@ public class ConveyanceBlacklistChannelService implements IConveyanceBlacklistCh
 	}
 	
 	@Override
-	public Page<ConveyanceBlacklistChannel> findPaginated(Pageable pageable) {
+	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         
-        List<ConveyanceBlacklistChannel> channels = repository.findAll();
+        List<Map<String, Object>> channelsMap = new ArrayList<>();
+		try {
+			channelsMap = getObjectList(repository);
+		} catch (MasterServiceException ex) {
+			logger.error("Failed to get object map");
+			logger.error(ex.toString());
+		}
         
-        logger.info("Number of channels: " + channels.size());
+        logger.info("Number of channels: " + channelsMap.size());
         
-        List<ConveyanceBlacklistChannel> list;
+        List<Map<String, Object>> list;
 
-        if (channels.size() < startItem) {
+        if (channelsMap.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, channels.size());
-            list = channels.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, channelsMap.size());
+            list = channelsMap.subList(startItem, toIndex);
         }
 
-        Page<ConveyanceBlacklistChannel> conveyanceBlacklistChannelPage
-          = new PageImpl<ConveyanceBlacklistChannel>(list, PageRequest.of(currentPage, pageSize), channels.size());
+        Page<Map<String, Object>> conveyanceBlacklistChannelPage
+          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), channelsMap.size());
 
         return conveyanceBlacklistChannelPage;
     }
+	
+
 }

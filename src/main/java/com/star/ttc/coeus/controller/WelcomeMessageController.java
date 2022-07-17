@@ -2,6 +2,7 @@ package com.star.ttc.coeus.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IWelcomeMessageService;
-import com.star.ttc.coeus.models.Webhooks;
-import com.star.ttc.coeus.models.WelcomeMessage;
 
 @Controller
 public class WelcomeMessageController {
@@ -59,7 +58,7 @@ public class WelcomeMessageController {
         model.addAttribute("requestMappingUrl", requestMappingUrl);
         
         
-        Page<WelcomeMessage> welcomeMessagePage = welcoemMessageService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        Page<Map<String, Object>> welcomeMessagePage = welcoemMessageService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", welcomeMessagePage);
 
