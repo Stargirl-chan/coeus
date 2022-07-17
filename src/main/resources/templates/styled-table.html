@@ -17,7 +17,7 @@
             <th:block th:each="pageItem, iStat : ${tablePage.content}">
                 <tr onclick='toggleRow(this)'>
                 <td th:each="item : ${pageItem}"><span th:text="${item.value}"></span></td>
-                <tr class="expandable-row hide-row"><td>Placeholder</td></tr>
+                <tr class="expandable-row-content hide-row"><td>Placeholder</td></tr>
             </th:block>
 	    </tbody>
 	</table>
@@ -55,7 +55,7 @@
 	function toggleRow(_this) {
 		let tr = $(_this).closest("tr");
 		let rowindex = tr.index();
-		document.getElementsByClassName("expandable-row")[tr.index() / 2].classList.toggle('hide-row');
+		document.getElementsByClassName("expandable-row-content")[tr.index() / 2].classList.toggle('hide-row');
 	}
 	/*]]>*/
 	</script>
