@@ -27,21 +27,25 @@
 	</div>
 	
 	<div id="main">
-	  <h2>Sidenav Test</h2>
-	  <p>Just some test</p>
-	  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+	  <h2>Site Navigation</h2>
+	  <p>Browse all available sites</p>
+	  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Navigation</span>
 	</div>
 
 	<script>
 	function openNav() {
 	  document.getElementById("sidenav").style.width = "250px";
 	  document.getElementById("main").style.marginLeft = "250px";
+	  document.getElementById("styled-table").style.marginLeft = "250px";
+	  document.getElementById("table-pagination").style.marginLeft = "250px";
 	  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 	}
 	
 	function closeNav() {
 	  document.getElementById("sidenav").style.width = "0";
 	  document.getElementById("main").style.marginLeft= "0";
+	  document.getElementById("styled-table").style.marginLeft = "0";
+	  document.getElementById("table-pagination").style.marginLeft = "0";
 	  document.body.style.backgroundColor = "white";
 	}
 	</script>
