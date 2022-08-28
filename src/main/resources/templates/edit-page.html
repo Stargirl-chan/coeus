@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Placeholder</title>
+    <link th:href="@{/styles/generic.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="side-nav"></div>
+<form th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${pojo}" method="post">
+	
+	<table class="styled-table" id="styled-table">
+	    <thead>
+	        <tr>
+	            <th th:each="header : ${tableHeaders}" th:text="${header}"></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+			<tr>
+            	<td th:each="item : ${rowEntry}">
+            		<!--  <input type="text" th:field="*{__${item.key}__}" th:value="${item.value}" th:readonly="${item.key == 'id'}" /> -->
+            		<input type="text" th:name="${item.key}" th:id="${item.key}" th:value="${item.value}" th:readonly="${item.key == 'id'}" />
+            	</td>
+        	</tr>
+	    </tbody>
+	</table>
+	
+	<input type="submit" value="Submit"/>
+</form>
+<form th:action="@{__${#httpServletRequest.requestURI}__/delete}" method="post">
+	<input type="submit" value="Delete"/>
+</form>
+</body>
+</html>

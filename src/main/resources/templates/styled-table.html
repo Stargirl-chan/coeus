@@ -15,9 +15,12 @@
 	            <td colspan="2">No values saved</td>
 	        </tr>
             <th:block th:each="pageItem, iStat : ${tablePage.content}">
-                <tr onclick='toggleRow(this)'>
-                <td th:each="item : ${pageItem}"><span th:text="${item.value}"></span></td>
-                <tr class="expandable-row-content hide-row"><td>Placeholder</td></tr>
+                <tr onClick="navToEditPage(this)">
+                	<th:block th:each="item, stat : ${pageItem}">
+                		<td><span th:text="${item.value}"></span></td>
+						<!-- <td><button type="submit" class="link-button" th:if="${stat.last}" onClick="deleteEntry(this)">DELETE</button></td> -->
+                	</th:block>
+                </tr>
             </th:block>
 	    </tbody>
 	</table>
@@ -56,6 +59,18 @@
 		let tr = $(_this).closest("tr");
 		let rowindex = tr.index();
 		document.getElementsByClassName("expandable-row-content")[tr.index() / 2].classList.toggle('hide-row');
+	}
+	
+	function navToEditPage(_this) {
+		const id = _this.cells[0].textContent;
+		location.href = `${location.pathname}/edit/${id}`
+	}
+	
+	function deleteEntry(_this) {
+		//const id = _this.cells[0].textContent;
+		//location.href = `${location.pathname}/edit/${id}`
+		const tr = $(_this).closest("tr");
+		console.log(tr);
 	}
 	/*]]>*/
 	</script>
