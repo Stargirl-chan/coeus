@@ -16,7 +16,7 @@ public class BotConfigView {
 
 	@Id
 	@Getter
-	private int configId;
+	private Long configId;
 	
 	@Column(name = "config_properties_id", nullable = true)
 	@Getter

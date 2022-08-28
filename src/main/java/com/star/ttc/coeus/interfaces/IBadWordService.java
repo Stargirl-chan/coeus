@@ -12,4 +12,10 @@ public interface IBadWordService {
 	List<BadWord> findAll();
 	
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
+	
+	Map<String, Object> findById(Long id);
+	
+	BadWord update(BadWord badWord);
+	
+	void delete(Long id);
 }

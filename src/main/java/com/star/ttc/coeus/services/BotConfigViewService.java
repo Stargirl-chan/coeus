@@ -14,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.star.ttc.coeus.interfaces.IBotConfigViewService;
 import com.star.ttc.coeus.models.BotConfigView;
 import com.star.ttc.coeus.repositories.BotConfigViewRepository;
@@ -74,5 +77,26 @@ public class BotConfigViewService extends MasterService implements IBotConfigVie
         return configViewPage;
     }
 	
-
+	@Override
+	public Map<String, Object> findById(Long id) {
+		
+		BotConfigView configView = new BotConfigView();
+		
+		ObjectMapper oMapper = JsonMapper.builder()
+				   .addModule(new JavaTimeModule())
+				   .build();
+		
+		Map<String, Object> objectMap = null;
+		
+		try {
+			
+			objectMap = getObject(repository, id);
+			
+		} catch(Exception ex) {
+			// TODO: handle exception
+		}
+		
+		return objectMap;
+	}
+	
 }

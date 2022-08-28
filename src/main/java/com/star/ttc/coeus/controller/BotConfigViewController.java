@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.websocket.server.PathParam;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,4 +78,23 @@ public class BotConfigViewController {
 
         return "view-config";
     }
+	
+	@GetMapping("/view-config/edit/{id}")
+	public ModelAndView editPage(@PathVariable Long id) {
+		ModelAndView mav = new ModelAndView("edit-page");
+		
+		List<String> labels = Arrays.asList("Config ID", "Config Properties ID", "Support Channel", "Welcome Channel", "Verified Role", "Moderator Role", "Conveyance Blacklist Channel", "Conveyance Channel", "Harold Emoji", "Welcome Message");
+		
+		mav.addObject("rowEntry", botConfigViewService.findById(id));
+		mav.addObject("labels", labels);
+		return mav;
+	}
+	
+	@PutMapping("/view-config/edit/{id}")
+	public ModelAndView updateEntry(@PathVariable Long id) {
+		ModelAndView mav = new ModelAndView("edit-page");
+		
+		mav.addObject("viewConfigEntry", botConfigViewService.findById(id));
+		return mav;
+	}
 }

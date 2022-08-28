@@ -14,12 +14,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IBadWordService;
+import com.star.ttc.coeus.models.BadWord;
 
 @Controller
 public class BadWordController {
@@ -71,4 +78,34 @@ public class BadWordController {
 
         return "bad-word";
     }
+	
+	@GetMapping("/bad-words/edit/{id}")
+	public ModelAndView editPage(@PathVariable Long id) {
+		ModelAndView mav = new ModelAndView("edit-page");
+		
+		List<String> tableHeaders = Arrays.asList("ID", "Word");
+		
+		mav.addObject("pojo", new BadWord());
+		mav.addObject("rowEntry", badWordService.findById(id));
+		mav.addObject("tableHeaders", tableHeaders);
+		return mav;
+	}
+	
+	@PostMapping("/bad-words/edit/{id}")
+	public String updateEntry(
+			@ModelAttribute BadWord badWord)
+	{
+		badWordService.update(badWord);
+		
+		return "redirect:/bad-words";
+	}
+	
+	@PostMapping("/bad-words/edit/{id}/delete")
+	public String deleteEntry(
+			@PathVariable Long id)
+	{
+		badWordService.delete(id);
+		
+		return "redirect:/bad-words";
+	}
 }
