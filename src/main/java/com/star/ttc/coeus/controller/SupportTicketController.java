@@ -14,14 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.ISupportTicketService;
-import com.star.ttc.coeus.models.SupportTicket;
 
 @Controller
 public class SupportTicketController {
@@ -30,37 +27,6 @@ public class SupportTicketController {
 	
 	@Autowired
 	private ISupportTicketService supportTicketService;
-	
-	@GetMapping("/tickets")
-	public List<SupportTicket> findTickets() {
-		logger.info(supportTicketService.findAll().toString());
-		
-		return (List<SupportTicket>) supportTicketService.findAll();
-		/*List<SupportTicket> tickets = supportTicketService.findAll();
-		
-		List<String> strTickets = new ArrayList<>();
-		for (SupportTicket ticket : tickets) {
-			strTickets.add(ticket.toString());
-		}
-		return strTickets;*/
-	}
-	
-	@RequestMapping("/support-tickets-old")
-	public ModelAndView index() {
-		logger.info(supportTicketService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("support-ticket-old");
-		
-		mav.addObject("tickets", supportTicketService.findAll());
-		return mav;
-		/*List<SupportTicket> tickets = supportTicketService.findAll();
-		
-		List<String> strTickets = new ArrayList<>();
-		for (SupportTicket ticket : tickets) {
-			strTickets.add(ticket.toString());
-		}
-		return strTickets;*/
-	}
 	
 	@RequestMapping(value = "/support-tickets", method = RequestMethod.GET)
     public String indexPaginated(
@@ -94,6 +60,6 @@ public class SupportTicketController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "support-ticket";
+        return "info-page";
     }
 }

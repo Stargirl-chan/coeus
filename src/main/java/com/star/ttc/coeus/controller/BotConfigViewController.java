@@ -7,8 +7,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.websocket.server.PathParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +31,6 @@ public class BotConfigViewController {
 	
 	@Autowired
 	private IBotConfigViewService botConfigViewService;
-	
-	@RequestMapping("/view-config-old")
-	public ModelAndView index() {
-		logger.info(botConfigViewService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("view-config-old");
-		
-		mav.addObject("properties", botConfigViewService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/view-config", method = RequestMethod.GET)
     public String indexPaginated(
@@ -76,7 +64,7 @@ public class BotConfigViewController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "view-config";
+        return "info-page";
     }
 	
 	@GetMapping("/view-config/edit/{id}")

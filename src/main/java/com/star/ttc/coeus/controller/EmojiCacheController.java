@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IEmojiCacheService;
 
@@ -28,16 +27,6 @@ public class EmojiCacheController {
 	
 	@Autowired
 	private IEmojiCacheService emojiCacheService;
-	
-	@RequestMapping("/emoji-cache-old")
-	public ModelAndView index() {
-		logger.info(emojiCacheService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("emoji-cache-old");
-		
-		mav.addObject("items", emojiCacheService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/emoji-cache", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class EmojiCacheController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "emoji-cache";
+        return "info-page";
     }
 }

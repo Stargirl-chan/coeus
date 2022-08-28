@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IConveyanceBlacklistChannelService;
 
@@ -28,16 +27,6 @@ public class ConveyanceBlacklistChannelController {
 	
 	@Autowired
 	private IConveyanceBlacklistChannelService conveyanceBlacklistChannelService;
-	
-	@RequestMapping("/conveyance-blacklist-channel-old")
-	public ModelAndView index() {
-		logger.info(conveyanceBlacklistChannelService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("conveyance-blacklist-channel-old");
-		
-		mav.addObject("channels", conveyanceBlacklistChannelService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/conveyance-blacklist-channel", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class ConveyanceBlacklistChannelController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "conveyance-blacklist-channel";
+        return "info-page";
     }
 }

@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IWebhookksService;
 
@@ -28,16 +27,6 @@ public class WebhooksController {
 	
 	@Autowired
 	private IWebhookksService webhookService;
-	
-	@RequestMapping("/webhooks-old")
-	public ModelAndView index() {
-		logger.info(webhookService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("webhooks-old");
-		
-		mav.addObject("hooks", webhookService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/webhooks", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class WebhooksController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "webhooks";
+        return "info-page";
     }
 }

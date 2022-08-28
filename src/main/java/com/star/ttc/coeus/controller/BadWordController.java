@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,16 +33,6 @@ public class BadWordController {
 	
 	@Autowired
 	private IBadWordService badWordService;
-	
-	@RequestMapping("/bad-words-old")
-	public ModelAndView index() {
-		// logger.info(badWordService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("bad-word-old");
-		
-		mav.addObject("words", badWordService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/bad-words", method = RequestMethod.GET)
     public String indexPaginated(
@@ -76,7 +64,7 @@ public class BadWordController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "bad-word";
+        return "info-page";
     }
 	
 	@GetMapping("/bad-words/edit/{id}")
@@ -97,7 +85,7 @@ public class BadWordController {
 	{
 		badWordService.update(badWord);
 		
-		return "redirect:/bad-words";
+		return "redirect:/info-page";
 	}
 	
 	@PostMapping("/bad-words/edit/{id}/delete")
@@ -106,6 +94,6 @@ public class BadWordController {
 	{
 		badWordService.delete(id);
 		
-		return "redirect:/bad-words";
+		return "redirect:/info-page";
 	}
 }

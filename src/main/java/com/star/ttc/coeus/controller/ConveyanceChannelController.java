@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IConveyanceChannelService;
 
@@ -28,16 +27,6 @@ public class ConveyanceChannelController {
 	
 	@Autowired
 	private IConveyanceChannelService conveyanceChannelService;
-	
-	@RequestMapping("/conveyance-channel-old")
-	public ModelAndView index() {
-		logger.info(conveyanceChannelService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("conveyance-channel-old");
-		
-		mav.addObject("channels", conveyanceChannelService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/conveyance-channel", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class ConveyanceChannelController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "conveyance-channel";
+        return "info-page";
     }
 }

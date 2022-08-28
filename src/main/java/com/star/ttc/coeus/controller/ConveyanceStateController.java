@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IConveyanceStateService;
 
@@ -28,16 +27,6 @@ public class ConveyanceStateController {
 	
 	@Autowired
 	private IConveyanceStateService conveyanceStateService;
-	
-	@RequestMapping("/conveyance-state-old")
-	public ModelAndView index() {
-		logger.info(conveyanceStateService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("conveyance-state-old");
-		
-		mav.addObject("states", conveyanceStateService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/conveyance-state", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class ConveyanceStateController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "conveyance-state";
+        return "info-page";
     }
 }

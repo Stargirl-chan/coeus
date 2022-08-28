@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IBotConfigPropertiesService;
 
@@ -28,16 +27,6 @@ public class BotConfigPropertiesController {
 	
 	@Autowired
 	private IBotConfigPropertiesService botConfigPropertiesService;
-	
-	@RequestMapping("/bot-config-properties-old")
-	public ModelAndView index() {
-		logger.info(botConfigPropertiesService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("bot-config-properties-old");
-		
-		mav.addObject("properties", botConfigPropertiesService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/bot-config-properties", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class BotConfigPropertiesController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "bot-config-properties";
+        return "info-page";
     }
 }

@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.ISelfRolesService;
 
@@ -28,16 +27,6 @@ public class SelfRolesController {
 	
 	@Autowired
 	private ISelfRolesService selfRolesService;
-	
-	@RequestMapping("/self-roles-old")
-	public ModelAndView index() {
-		logger.info(selfRolesService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("self-roles-old");
-		
-		mav.addObject("roles", selfRolesService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/self-roles", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class SelfRolesController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "self-roles";
+        return "info-page";
     }
 }

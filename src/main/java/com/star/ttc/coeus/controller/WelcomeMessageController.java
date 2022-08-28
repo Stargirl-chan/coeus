@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IWelcomeMessageService;
 
@@ -28,16 +27,6 @@ public class WelcomeMessageController {
 	
 	@Autowired
 	private IWelcomeMessageService welcoemMessageService;
-	
-	@RequestMapping("/welcome-message-old")
-	public ModelAndView index() {
-		logger.info(welcoemMessageService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("welcome-message-old");
-		
-		mav.addObject("messages", welcoemMessageService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/welcome-message", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class WelcomeMessageController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "welcome-message";
+        return "info-page";
     }
 }

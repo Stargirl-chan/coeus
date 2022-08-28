@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IHaroldEmojiService;
 
@@ -28,16 +27,6 @@ public class HaroldEmojiController {
 	
 	@Autowired
 	private IHaroldEmojiService haroldEmojiService;
-	
-	@RequestMapping("/harold-emoji-old")
-	public ModelAndView index() {
-		logger.info(haroldEmojiService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("harold-emoji-old");
-		
-		mav.addObject("emojis", haroldEmojiService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/harold-emoji", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class HaroldEmojiController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "harold-emoji";
+        return "info-page";
     }
 }

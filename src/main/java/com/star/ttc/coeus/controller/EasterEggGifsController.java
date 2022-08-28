@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.star.ttc.coeus.interfaces.IEasterEggGifsService;
 
@@ -28,16 +27,6 @@ public class EasterEggGifsController {
 	
 	@Autowired
 	private IEasterEggGifsService easterEggGifsService;
-	
-	@RequestMapping("/easter-eggs-old")
-	public ModelAndView index() {
-		logger.info(easterEggGifsService.findAll().toString());
-		
-		ModelAndView mav = new ModelAndView("easter-eggs-old");
-		
-		mav.addObject("eggs", easterEggGifsService.findAll());
-		return mav;
-	}
 	
 	@RequestMapping(value = "/easter-eggs", method = RequestMethod.GET)
     public String indexPaginated(
@@ -71,6 +60,6 @@ public class EasterEggGifsController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "easter-eggs";
+        return "info-page";
     }
 }
