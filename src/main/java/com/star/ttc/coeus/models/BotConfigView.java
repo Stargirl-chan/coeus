@@ -17,44 +17,44 @@ public class BotConfigView {
 	@Id
 	@Getter
 	private Long configId;
-	
+
 	@Column(name = "config_properties_id", nullable = true)
 	@Getter
 	private int configPropertiesId;
-	
+
 	@Getter
 	@Column(name = "support_channel", nullable = true)
 	private BigInteger supportChannel;
-	
+
 	@Getter
 	@Column(name = "conveyance_channel", nullable = true)
 	private BigInteger conveyanceChannel;
-	
+
 	@Getter
 	@Column(name = "conveyance_blacklist_channel", nullable = true)
 	private BigInteger conveyanceBlacklistChannel;
-	
+
 	@Getter
 	@Column(name = "welcome_channel", nullable = true)
 	private BigInteger welcomeChannel;
-	
+
 	@Getter
 	@Column(name = "verified_role", nullable = true)
 	private BigInteger verifiedRole;
-	
+
 	@Getter
 	@Column(name = "moderator_role", nullable = true)
 	private BigInteger moderatorRole;
-	
+
 	@Getter
 	@Column(name = "welcome_message", nullable = true)
 	private String welcomeMessage;
-	
+
 	@Getter
 	@Column(name = "harold_emoji", nullable = true)
 	private String haroldEmoji;
-	
-	
+
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BotConfigView{");
@@ -71,7 +71,7 @@ public class BotConfigView {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

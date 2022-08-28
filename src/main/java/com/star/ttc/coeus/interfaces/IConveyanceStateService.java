@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.ConveyanceState;
 
 public interface IConveyanceStateService {
 	List<ConveyanceState> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

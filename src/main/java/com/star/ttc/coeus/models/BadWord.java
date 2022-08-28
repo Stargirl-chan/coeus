@@ -21,12 +21,12 @@ public class BadWord {
 	@Setter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Getter
 	@Setter
 	@Column(name = "word", nullable = false)
 	private String word;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BadWord{");
@@ -35,7 +35,7 @@ public class BadWord {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

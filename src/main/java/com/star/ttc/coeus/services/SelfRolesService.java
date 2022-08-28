@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.SelfRolesRepository;
 public class SelfRolesService extends MasterService implements ISelfRolesService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SelfRolesService.class);
-	
+
 	@Autowired
 	private SelfRolesRepository repository;
-	
+
 	@Override
 	public List<SelfRoles> findAll() {
-		
+
 		List<SelfRoles> roles = new ArrayList<>();
-		
+
 		try {
-			roles = (List<SelfRoles>) repository.findAll();
-			
+			roles = repository.findAll();
+
 			logger.info("Number of self roles: " + roles.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return roles;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> rolesMap = new ArrayList<>();
 		try {
 			rolesMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class SelfRolesService extends MasterService implements ISelfRolesService
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of self roles: " + rolesMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (rolesMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class SelfRolesService extends MasterService implements ISelfRolesService
         }
 
         Page<Map<String, Object>> selfRolesPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), rolesMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), rolesMap.size());
 
         return selfRolesPage;
     }
-	
+
 
 }

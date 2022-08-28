@@ -15,36 +15,36 @@ import lombok.Getter;
 @Entity
 @Table(name = "ttc_support_tickets")
 public class SupportTicket {
-	
+
 	@Id
 	@Getter
 	@GeneratedValue
 	private int incidentId;
-	
+
 	@Getter
 	@Column(name = "thread_id", nullable = false)
 	private BigInteger threadId;
-	
+
 	@Getter
 	@Column(name = "user_id", nullable = false)
 	private BigInteger userId;
-	
+
 	@Getter
 	@Column(name = "incident_time", nullable = false)
 	private OffsetDateTime incidentTime;
-	
+
 	@Getter
 	@Column(name = "incident_title", nullable = false)
 	private String incidentTitle;
-	
+
 	@Getter
 	@Column(name = "incident_solved", nullable = false)
 	private boolean incidentSolved;
-	
+
 	@Getter
 	@Column(name = "unarchivals", nullable = false)
 	private short unarchivals;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("SupportTicket{");
@@ -58,7 +58,7 @@ public class SupportTicket {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

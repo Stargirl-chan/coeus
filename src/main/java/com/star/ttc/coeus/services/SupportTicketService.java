@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.SupportTicketRepository;
 public class SupportTicketService extends MasterService implements ISupportTicketService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SupportTicketService.class);
-	
+
 	@Autowired
 	private SupportTicketRepository repository;
-	
+
 	@Override
 	public List<SupportTicket> findAll() {
-		
+
 		List<SupportTicket> tickets = new ArrayList<>();
-		
+
 		try {
-			tickets = (List<SupportTicket>) repository.findAll();
-			
+			tickets = repository.findAll();
+
 			logger.info("Number of self roles: " + tickets.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return tickets;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> ticketsMap = new ArrayList<>();
 		try {
 			ticketsMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class SupportTicketService extends MasterService implements ISupportTicke
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of support tickets: " + ticketsMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (ticketsMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class SupportTicketService extends MasterService implements ISupportTicke
         }
 
         Page<Map<String, Object>> supportTicketPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), ticketsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), ticketsMap.size());
 
         return supportTicketPage;
     }
-	
+
 
 }

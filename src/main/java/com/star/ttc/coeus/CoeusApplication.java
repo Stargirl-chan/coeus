@@ -8,5 +8,5 @@ public class CoeusApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoeusApplication.class, args);
-	}	
+	}
 }

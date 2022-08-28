@@ -18,31 +18,31 @@ public class MessageCache {
 	@Id
 	@Getter
 	private int id;
-	
+
 	@Getter
 	@Column(name = "message_id", nullable = false)
 	private BigInteger messageId;
-	
+
 	@Getter
 	@Column(name = "channel_id", nullable = false)
 	private BigInteger channelId;
-	
+
 	@Getter
 	@Column(name = "user_id", nullable = false)
 	private BigInteger userId;
-	
+
 	@Getter
 	@Column(name = "message_time", nullable = false)
 	private OffsetDateTime messageTime;
-	
+
 	@Getter
 	@Column(name = "content", nullable = false)
 	private String content;
-	
+
 	@Getter
 	@Column(name = "attachments", nullable = false)
 	private String attachments;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("MessageCache{");
@@ -56,7 +56,7 @@ public class MessageCache {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

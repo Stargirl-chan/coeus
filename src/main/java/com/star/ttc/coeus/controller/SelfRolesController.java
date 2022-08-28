@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.ISelfRolesService;
 public class SelfRolesController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SelfRolesController.class);
-	
+
 	@Autowired
 	private ISelfRolesService selfRolesService;
-	
+
 	@RequestMapping(value = "/self-roles", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("ID", "Role ID", "Emoji Name");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/self-roles";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> selfRolesPage = selfRolesService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", selfRolesPage);
 
         int totalPages = selfRolesPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

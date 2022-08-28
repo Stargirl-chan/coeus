@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.ISupportTicketService;
 public class SupportTicketController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SupportTicketController.class);
-	
+
 	@Autowired
 	private ISupportTicketService supportTicketService;
-	
+
 	@RequestMapping(value = "/support-tickets", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("Incident ID", "Thread ID", "User ID", "Incident Time", "Incident Title", "Incident Solved", "Unarchivals");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/support-tickets";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> supportTicketPage = supportTicketService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", supportTicketPage);
 
         int totalPages = supportTicketPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

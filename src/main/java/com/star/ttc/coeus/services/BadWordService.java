@@ -27,33 +27,33 @@ import com.star.ttc.coeus.repositories.BadWordRepository;
 public class BadWordService extends MasterService implements IBadWordService {
 
 	private static final Logger logger = LoggerFactory.getLogger(BadWordService.class);
-	
+
 	@Autowired
 	private BadWordRepository repository;
-	
+
 	@Override
 	public List<BadWord> findAll() {
-		
+
 		List<BadWord> words = new ArrayList<>();
-		
+
 		try {
-			words = (List<BadWord>) repository.findAll();
-			
+			words = repository.findAll();
+
 			logger.info("Number of bad words: " + words.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return words;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;  
-        
+        int startItem = currentPage * pageSize;
+
         List<Map<String, Object>> wordsMap = new ArrayList<>();
 		try {
 			wordsMap = getObjectList(repository);
@@ -62,7 +62,7 @@ public class BadWordService extends MasterService implements IBadWordService {
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         List<Map<String, Object>> list;
 
         if (wordsMap.size() < startItem) {
@@ -73,33 +73,33 @@ public class BadWordService extends MasterService implements IBadWordService {
         }
 
         Page<Map<String, Object>> badWordPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), wordsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), wordsMap.size());
 
         return badWordPage;
     }
-	
+
 	@Override
 	public Map<String, Object> findById(Long id) {
-		
+
 		BotConfigView configView = new BotConfigView();
-		
+
 		ObjectMapper oMapper = JsonMapper.builder()
 				   .addModule(new JavaTimeModule())
 				   .build();
-		
+
 		Map<String, Object> objectMap = null;
-		
+
 		try {
-			
+
 			objectMap = getObject(repository, id);
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return objectMap;
 	}
-	
+
 	@Override
 	@Transactional
 	public BadWord update(BadWord badWord) {
@@ -111,7 +111,7 @@ public class BadWordService extends MasterService implements IBadWordService {
 		}
 		return res;
 	}
-	
+
 	@Override
 	@Transactional
 	public void delete(Long id) {

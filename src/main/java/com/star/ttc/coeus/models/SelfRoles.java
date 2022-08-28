@@ -14,19 +14,19 @@ import lombok.Getter;
 @Table(name = "ttc_selfroles")
 public class SelfRoles {
 
-	
+
 	@Id
 	@Getter
 	private int id;
-	
+
 	@Getter
 	@Column(name = "role_id", nullable = false)
 	private BigInteger roleId;
-	
+
 	@Getter
 	@Column(name = "emoji_name", nullable = false)
 	private String emojiName;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("SelfRoles{");
@@ -36,7 +36,7 @@ public class SelfRoles {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

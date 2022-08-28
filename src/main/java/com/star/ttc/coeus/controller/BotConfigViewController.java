@@ -28,35 +28,35 @@ import com.star.ttc.coeus.interfaces.IBotConfigViewService;
 public class BotConfigViewController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BotConfigViewController.class);
-	
+
 	@Autowired
 	private IBotConfigViewService botConfigViewService;
-	
+
 	@RequestMapping(value = "/view-config", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("Config ID", "Config Properties ID", "Support Channel", "Welcome Channel", "Verified Role", "Moderator Role", "Conveyance Blacklist Channel", "Conveyance Channel", "Harold Emoji", "Welcome Message");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/view-config";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> botConfigViewPage = botConfigViewService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", botConfigViewPage);
 
         int totalPages = botConfigViewPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()
@@ -66,22 +66,22 @@ public class BotConfigViewController {
 
         return "info-page";
     }
-	
+
 	@GetMapping("/view-config/edit/{id}")
 	public ModelAndView editPage(@PathVariable Long id) {
 		ModelAndView mav = new ModelAndView("edit-page");
-		
+
 		List<String> labels = Arrays.asList("Config ID", "Config Properties ID", "Support Channel", "Welcome Channel", "Verified Role", "Moderator Role", "Conveyance Blacklist Channel", "Conveyance Channel", "Harold Emoji", "Welcome Message");
-		
+
 		mav.addObject("rowEntry", botConfigViewService.findById(id));
 		mav.addObject("labels", labels);
 		return mav;
 	}
-	
+
 	@PutMapping("/view-config/edit/{id}")
 	public ModelAndView updateEntry(@PathVariable Long id) {
 		ModelAndView mav = new ModelAndView("edit-page");
-		
+
 		mav.addObject("viewConfigEntry", botConfigViewService.findById(id));
 		return mav;
 	}

@@ -30,10 +30,10 @@ import com.star.ttc.coeus.models.BadWord;
 public class BadWordController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BadWordController.class);
-	
+
 	@Autowired
 	private IBadWordService badWordService;
-	
+
 	@RequestMapping(value = "/bad-words", method = RequestMethod.GET)
     public String indexPaginated(
       Model model,
@@ -41,22 +41,22 @@ public class BadWordController {
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("ID", "Word");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         String requestMappingUrl = "/bad-words";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        Page<Map<String, Object>> badWordPage = badWordService.findPaginated(PageRequest.of(currentPage - 1, pageSize));  
+
+        Page<Map<String, Object>> badWordPage = badWordService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", badWordPage);
 
         int totalPages = badWordPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()
@@ -66,34 +66,34 @@ public class BadWordController {
 
         return "info-page";
     }
-	
+
 	@GetMapping("/bad-words/edit/{id}")
 	public ModelAndView editPage(@PathVariable Long id) {
 		ModelAndView mav = new ModelAndView("edit-page");
-		
+
 		List<String> tableHeaders = Arrays.asList("ID", "Word");
-		
+
 		mav.addObject("pojo", new BadWord());
 		mav.addObject("rowEntry", badWordService.findById(id));
 		mav.addObject("tableHeaders", tableHeaders);
 		return mav;
 	}
-	
+
 	@PostMapping("/bad-words/edit/{id}")
 	public String updateEntry(
 			@ModelAttribute BadWord badWord)
 	{
 		badWordService.update(badWord);
-		
+
 		return "redirect:/info-page";
 	}
-	
+
 	@PostMapping("/bad-words/edit/{id}/delete")
 	public String deleteEntry(
 			@PathVariable Long id)
 	{
 		badWordService.delete(id);
-		
+
 		return "redirect:/info-page";
 	}
 }

@@ -10,8 +10,8 @@ import com.star.ttc.coeus.models.BotConfigView;
 
 public interface IBotConfigViewService {
 	List<BotConfigView> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
-	
+
 	Map<String, Object> findById(Long id);
 }

@@ -21,38 +21,38 @@ public class BotConfig {
 	@Getter
 	@GeneratedValue
 	private int id;
-	
+
 	@Getter
 	@Column(name = "support_channel", nullable = false)
 	private BigInteger supportChannel;
-	
+
 	@Getter
 	@ElementCollection(targetClass = BigInteger.class)
 	@Column(name = "conveyance_channels", nullable = false)
 	private List<BigInteger> conveyanceChannel;
-	
+
 	@Getter
 	@ElementCollection(targetClass = BigInteger.class)
 	@Column(name = "conveyance_blacklisted_channels", nullable = false)
 	private List<BigInteger> conveyanceBlacklistChannel;
-	
+
 	@Getter
 	@Column(name = "welcome_channel", nullable = false)
 	private BigInteger welcomeChannel;
-	
+
 	@Getter
 	@Column(name = "verified_role", nullable = false)
 	private BigInteger verifiedRole;
-	
+
 	@Getter
 	@Column(name = "moderator_role", nullable = false)
 	private BigInteger moderatorRole;
-	
+
 	@Getter
 	@ElementCollection(targetClass = String.class)
 	@Column(name = "welcome_messages", nullable = false)
 	private List<String> welcomeMessage;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BotConfig{");
@@ -67,7 +67,7 @@ public class BotConfig {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

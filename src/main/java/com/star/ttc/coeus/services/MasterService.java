@@ -20,9 +20,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  *
  */
 public class MasterService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MasterService.class);
-	
+
 	private static final ObjectMapper oMapper = JsonMapper.builder()
 			   					.addModule(new JavaTimeModule())
 			   					.build();
@@ -30,54 +30,54 @@ public class MasterService {
 	/***
 	 * Returns an list of objects from the given repository
 	 * @param repository
-	 * @throws MasterServiceException 
+	 * @throws MasterServiceException
 	 */
 	@Transactional(readOnly = true)
 	protected <T> List<Map<String, Object>> getObjectList(JpaRepository<T, Long> repository) throws MasterServiceException {
-		
+
 		List<?> items = new ArrayList<>();
-		
+
 		try {
-			items = (List<?>) repository.findAll();
-			
+			items = repository.findAll();
+
 		} catch(Exception ex) {
 			String message = "Failed to load data from Repository";
 			logger.error(message);
 			throw new MasterServiceException(message, ex);
 		}
-		
+
 		List<Map<String, Object>> objectMap = new ArrayList<>();
-        
+
         for (var item : items) {
         	objectMap.add(oMapper.convertValue(item, Map.class));
         }
-        
+
         return objectMap;
 	}
-	
+
 	/***
 	 * Returns an objects from the given repository
 	 * @param repository
-	 * @throws MasterServiceException 
+	 * @throws MasterServiceException
 	 */
 	@Transactional(readOnly = true)
 	protected <T> Map<String, Object> getObject(JpaRepository<T, Long> repository, Long id) throws MasterServiceException {
-		
+
 		T item = null;
-		
+
 		try {
-			item = (T) repository.findById(id).get();
-			
+			item = repository.findById(id).get();
+
 		} catch(Exception ex) {
 			String message = "Failed to load data from Repository";
 			logger.error(message);
 			throw new MasterServiceException(message, ex);
 		}
-		
+
 		Map<String, Object> objectMap = null;
-        
+
         objectMap = oMapper.convertValue(item, Map.class);
-        
+
         return objectMap;
 	}
 }

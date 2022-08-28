@@ -13,15 +13,15 @@ import lombok.Getter;
 @Table(name = "ttc_easter_egg_gifs")
 public class EasterEggGifs {
 
-	
+
 	@Id
 	@Getter
 	private int id;
-	
+
 	@Getter
 	@Column(name = "content", nullable = false)
 	private String content;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("EasterEggGifs{");
@@ -30,7 +30,7 @@ public class EasterEggGifs {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

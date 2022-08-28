@@ -19,12 +19,12 @@ public class ConveyanceChannel {
 	@Getter
 	@GeneratedValue
 	private int id;
-	
+
 	@Getter
 	@Column(name = "channel_id", nullable = false)
 	private BigInteger channelId;
-	
-	
+
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ConveyanceChannel{");
@@ -33,7 +33,7 @@ public class ConveyanceChannel {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

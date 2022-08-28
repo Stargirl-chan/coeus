@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.ConveyanceBlacklistChannelRepository;
 public class ConveyanceBlacklistChannelService extends MasterService implements IConveyanceBlacklistChannelService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ConveyanceBlacklistChannelService.class);
-	
+
 	@Autowired
 	private ConveyanceBlacklistChannelRepository repository;
-	
+
 	@Override
 	public List<ConveyanceBlacklistChannel> findAll() {
-		
+
 		List<ConveyanceBlacklistChannel> channels = new ArrayList<>();
-		
+
 		try {
-			channels = (List<ConveyanceBlacklistChannel>) repository.findAll();
-			
+			channels = repository.findAll();
+
 			logger.info("Number of channels: " + channels.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return channels;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> channelsMap = new ArrayList<>();
 		try {
 			channelsMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class ConveyanceBlacklistChannelService extends MasterService implements 
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of channels: " + channelsMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (channelsMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class ConveyanceBlacklistChannelService extends MasterService implements 
         }
 
         Page<Map<String, Object>> conveyanceBlacklistChannelPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), channelsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), channelsMap.size());
 
         return conveyanceBlacklistChannelPage;
     }
-	
+
 
 }

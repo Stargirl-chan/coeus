@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.IWebhookksService;
 public class WebhooksController {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebhooksController.class);
-	
+
 	@Autowired
 	private IWebhookksService webhookService;
-	
+
 	@RequestMapping(value = "/webhooks", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("Channel ID", "Webhook URL");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/webhooks";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> webhookPage = webhookService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", webhookPage);
 
         int totalPages = webhookPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.EmojiCacheChannelsRepository;
 public class EmojiCacheChannelsService extends MasterService implements IEmojiCacheChannelsService {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmojiCacheChannelsService.class);
-	
+
 	@Autowired
 	private EmojiCacheChannelsRepository repository;
-	
+
 	@Override
 	public List<EmojiCacheChannels> findAll() {
-		
+
 		List<EmojiCacheChannels> items = new ArrayList<>();
-		
+
 		try {
-			items = (List<EmojiCacheChannels>) repository.findAll();
-			
+			items = repository.findAll();
+
 			logger.info("Size of emoji channels cache: " + items.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return items;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> itemsMap = new ArrayList<>();
 		try {
 			itemsMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class EmojiCacheChannelsService extends MasterService implements IEmojiCa
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Size of emoji channels cache: " + itemsMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (itemsMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class EmojiCacheChannelsService extends MasterService implements IEmojiCa
         }
 
         Page<Map<String, Object>> emojiChannelCachePage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
 
         return emojiChannelCachePage;
     }
-	
+
 
 }

@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.IConveyanceBlacklistChannelService;
 public class ConveyanceBlacklistChannelController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ConveyanceBlacklistChannelController.class);
-	
+
 	@Autowired
 	private IConveyanceBlacklistChannelService conveyanceBlacklistChannelService;
-	
+
 	@RequestMapping(value = "/conveyance-blacklist-channel", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("ID", "Channel ID");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/conveyance-blacklist-channel";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> conveyanceBlacklistChannelPage = conveyanceBlacklistChannelService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", conveyanceBlacklistChannelPage);
 
         int totalPages = conveyanceBlacklistChannelPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.ConveyanceBlacklistChannel;
 
 public interface IConveyanceBlacklistChannelService {
 	List<ConveyanceBlacklistChannel> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

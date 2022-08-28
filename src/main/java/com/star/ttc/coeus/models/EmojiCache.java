@@ -14,19 +14,19 @@ import lombok.Getter;
 @Table(name = "ttc_emoji_cache")
 public class EmojiCache {
 
-	
+
 	@Id
 	@Getter
 	private BigInteger userId;
-	
+
 	@Getter
 	@Column(name = "emoji_name", nullable = false)
 	private String emojiName;
-	
+
 	@Getter
 	@Column(name = "emoji_count", nullable = false)
 	private BigInteger emojiCount;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("EmojiCache{");
@@ -36,7 +36,7 @@ public class EmojiCache {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

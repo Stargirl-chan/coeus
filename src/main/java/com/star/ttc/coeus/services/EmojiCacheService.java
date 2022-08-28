@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.EmojiCacheRepository;
 public class EmojiCacheService extends MasterService implements IEmojiCacheService {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmojiCacheService.class);
-	
+
 	@Autowired
 	private EmojiCacheRepository repository;
-	
+
 	@Override
 	public List<EmojiCache> findAll() {
-		
+
 		List<EmojiCache> items = new ArrayList<>();
-		
+
 		try {
-			items = (List<EmojiCache>) repository.findAll();
-			
+			items = repository.findAll();
+
 			logger.info("Size of emoji cache: " + items.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return items;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> itemsMap = new ArrayList<>();
 		try {
 			itemsMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class EmojiCacheService extends MasterService implements IEmojiCacheServi
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Size of emoji cache: " + itemsMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (itemsMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class EmojiCacheService extends MasterService implements IEmojiCacheServi
         }
 
         Page<Map<String, Object>> emojiCachePage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
 
         return emojiCachePage;
     }
-	
+
 
 }

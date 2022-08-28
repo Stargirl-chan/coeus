@@ -13,15 +13,15 @@ import lombok.Getter;
 @Table(name = "ttc_welcome_message")
 public class WelcomeMessage {
 
-	
+
 	@Id
 	@Getter
 	private int id;
-	
+
 	@Getter
 	@Column(name = "welcome_message", nullable = false)
 	private String welcomeMessage;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("WelcomeMessage{");
@@ -30,7 +30,7 @@ public class WelcomeMessage {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

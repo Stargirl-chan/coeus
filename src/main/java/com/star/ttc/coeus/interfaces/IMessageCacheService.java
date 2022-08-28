@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.MessageCache;
 
 public interface IMessageCacheService {
 	List<MessageCache> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

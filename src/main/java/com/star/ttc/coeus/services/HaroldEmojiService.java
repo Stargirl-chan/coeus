@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.HaroldEmojiRepository;
 public class HaroldEmojiService extends MasterService implements IHaroldEmojiService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HaroldEmojiService.class);
-	
+
 	@Autowired
 	private HaroldEmojiRepository repository;
-	
+
 	@Override
 	public List<HaroldEmoji> findAll() {
-		
+
 		List<HaroldEmoji> emojis = new ArrayList<>();
-		
+
 		try {
-			emojis = (List<HaroldEmoji>) repository.findAll();
-			
+			emojis = repository.findAll();
+
 			logger.info("Number of harold emojis: " + emojis.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return emojis;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> emojisMap = new ArrayList<>();
 		try {
 			emojisMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class HaroldEmojiService extends MasterService implements IHaroldEmojiSer
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of harold emojis: " + emojisMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (emojisMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class HaroldEmojiService extends MasterService implements IHaroldEmojiSer
         }
 
         Page<Map<String, Object>> haroldEmojiPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), emojisMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), emojisMap.size());
 
         return haroldEmojiPage;
     }
-	
+
 
 }

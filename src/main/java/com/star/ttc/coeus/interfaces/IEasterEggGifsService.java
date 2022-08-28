@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.EasterEggGifs;
 
 public interface IEasterEggGifsService {
 	List<EasterEggGifs> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

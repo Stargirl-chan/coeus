@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.WebhooksRepository;
 public class WebhooksService extends MasterService implements IWebhookksService {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebhooksService.class);
-	
+
 	@Autowired
 	private WebhooksRepository repository;
-	
+
 	@Override
 	public List<Webhooks> findAll() {
-		
+
 		List<Webhooks> hooks = new ArrayList<>();
-		
+
 		try {
-			hooks = (List<Webhooks>) repository.findAll();
-			
+			hooks = repository.findAll();
+
 			logger.info("Number of webhooks: " + hooks.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return hooks;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> hooksMap = new ArrayList<>();
 		try {
 			hooksMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class WebhooksService extends MasterService implements IWebhookksService 
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of webhooks: " + hooksMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (hooksMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class WebhooksService extends MasterService implements IWebhookksService 
         }
 
         Page<Map<String, Object>> webhookPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), hooksMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), hooksMap.size());
 
         return webhookPage;
     }
-	
+
 
 }

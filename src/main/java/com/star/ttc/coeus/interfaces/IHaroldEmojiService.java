@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.HaroldEmoji;
 
 public interface IHaroldEmojiService {
 	List<HaroldEmoji> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

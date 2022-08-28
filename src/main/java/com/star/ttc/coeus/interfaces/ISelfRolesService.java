@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.SelfRoles;
 
 public interface ISelfRolesService {
 	List<SelfRoles> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

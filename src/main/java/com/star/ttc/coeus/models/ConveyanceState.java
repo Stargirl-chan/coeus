@@ -16,11 +16,11 @@ public class ConveyanceState {
 	@Id
 	@Getter
 	private int id;
-	
+
 	@Getter
 	@Column(name = "current_message_id", nullable = false)
 	private int currentMessageId;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ConveyanceState{");
@@ -29,7 +29,7 @@ public class ConveyanceState {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

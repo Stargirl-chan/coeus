@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.Webhooks;
 
 public interface IWebhookksService {
 	List<Webhooks> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

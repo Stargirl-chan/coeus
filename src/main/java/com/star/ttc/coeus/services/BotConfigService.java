@@ -17,24 +17,24 @@ import com.star.ttc.coeus.repositories.BotConfigRepository;
 public class BotConfigService implements IBotConfigService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CoeusApplication.class);
-	
+
 	@Autowired
 	private BotConfigRepository repository;
-	
+
 	@Override
 	public List<BotConfig> findAll() {
-		
+
 		List<BotConfig> configs = new ArrayList<>();
-		
+
 		try {
-			configs = (List<BotConfig>) repository.findAll();
-			
+			configs = repository.findAll();
+
 			logger.info("Number of bad words: " + configs.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return configs;
 	}
 }

@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.EmojiCache;
 
 public interface IEmojiCacheService {
 	List<EmojiCache> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

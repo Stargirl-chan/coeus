@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.ConveyanceStateRepository;
 public class ConveyanceStateService extends MasterService implements IConveyanceStateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ConveyanceStateService.class);
-	
+
 	@Autowired
 	private ConveyanceStateRepository repository;
-	
+
 	@Override
 	public List<ConveyanceState> findAll() {
-		
+
 		List<ConveyanceState> states = new ArrayList<>();
-		
+
 		try {
-			states = (List<ConveyanceState>) repository.findAll();
-			
+			states = repository.findAll();
+
 			logger.info("Size of conveyance state: " + states.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return states;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> statesMap = new ArrayList<>();
 		try {
 			statesMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class ConveyanceStateService extends MasterService implements IConveyance
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Size of conveyance state: " + statesMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (statesMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class ConveyanceStateService extends MasterService implements IConveyance
         }
 
         Page<Map<String, Object>> conveyanceStatePage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), statesMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), statesMap.size());
 
         return conveyanceStatePage;
     }
-	
+
 
 }

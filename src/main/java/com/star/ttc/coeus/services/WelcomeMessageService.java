@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.WelcomeMessageRepository;
 public class WelcomeMessageService extends MasterService implements IWelcomeMessageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(WelcomeMessageService.class);
-	
+
 	@Autowired
 	private WelcomeMessageRepository repository;
-	
+
 	@Override
 	public List<WelcomeMessage> findAll() {
-		
+
 		List<WelcomeMessage> messages = new ArrayList<>();
-		
+
 		try {
-			messages = (List<WelcomeMessage>) repository.findAll();
-			
+			messages = repository.findAll();
+
 			logger.info("Number of welcome messages: " + messages.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return messages;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> messagesMap = new ArrayList<>();
 		try {
 			messagesMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class WelcomeMessageService extends MasterService implements IWelcomeMess
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of welcome messages: " + messagesMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (messagesMap.size() < startItem) {
@@ -69,7 +69,7 @@ public class WelcomeMessageService extends MasterService implements IWelcomeMess
         }
 
         Page<Map<String, Object>> welcomeMessagesPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), messagesMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), messagesMap.size());
 
         return welcomeMessagesPage;
     }

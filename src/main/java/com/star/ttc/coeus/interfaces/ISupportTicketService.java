@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.SupportTicket;
 
 public interface ISupportTicketService {
 	List<SupportTicket> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

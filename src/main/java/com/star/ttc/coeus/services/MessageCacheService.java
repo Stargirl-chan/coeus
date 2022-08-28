@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.MessageCacheRepository;
 public class MessageCacheService extends MasterService implements IMessageCacheService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MessageCacheService.class);
-	
+
 	@Autowired
 	private MessageCacheRepository repository;
-	
+
 	@Override
 	public List<MessageCache> findAll() {
-		
+
 		List<MessageCache> items = new ArrayList<>();
-		
+
 		try {
-			items = (List<MessageCache>) repository.findAll();
-			
+			items = repository.findAll();
+
 			logger.info("Size of message cache: " + items.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return items;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> itemsMap = new ArrayList<>();
 		try {
 			itemsMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class MessageCacheService extends MasterService implements IMessageCacheS
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Size of message cache: " + itemsMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (itemsMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class MessageCacheService extends MasterService implements IMessageCacheS
         }
 
         Page<Map<String, Object>> messageCachePage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), itemsMap.size());
 
         return messageCachePage;
     }
-	
+
 
 }

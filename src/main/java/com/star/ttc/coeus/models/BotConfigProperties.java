@@ -19,24 +19,24 @@ public class BotConfigProperties {
 	@Getter
 	@GeneratedValue
 	private int id;
-	
+
 	@Getter
 	@Column(name = "support_channel", nullable = false)
 	private BigInteger supportChannel;
-	
+
 	@Getter
 	@Column(name = "welcome_channel", nullable = false)
 	private BigInteger welcomeChannel;
-	
+
 	@Getter
 	@Column(name = "verified_role", nullable = false)
 	private BigInteger verifiedRole;
-	
+
 	@Getter
 	@Column(name = "moderator_role", nullable = false)
 	private BigInteger moderatorRole;
-	
-	
+
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BotConfigProperties{");
@@ -48,7 +48,7 @@ public class BotConfigProperties {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;
@@ -59,5 +59,5 @@ public class BotConfigProperties {
         hash = 79 * hash + Objects.hashCode(this.moderatorRole);
         return hash;
     }
-	
+
 }

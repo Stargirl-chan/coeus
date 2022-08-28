@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.IMessageCacheService;
 public class MessageCacheController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MessageCacheController.class);
-	
+
 	@Autowired
 	private IMessageCacheService messageCacheService;
-	
+
 	@RequestMapping(value = "/message-cache", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("ID", "Message ID", "Channel ID", "User ID", "Message Time", "Content", "Attachments");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/message-cache";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> messageCachePage = messageCacheService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", messageCachePage);
 
         int totalPages = messageCachePage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

@@ -10,6 +10,6 @@ import com.star.ttc.coeus.models.WelcomeMessage;
 
 public interface IWelcomeMessageService {
 	List<WelcomeMessage> findAll();
-	
+
 	Page<Map<String, Object>> findPaginated(Pageable pageable);
 }

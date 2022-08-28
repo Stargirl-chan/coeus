@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.IBotConfigPropertiesService;
 public class BotConfigPropertiesController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BotConfigPropertiesController.class);
-	
+
 	@Autowired
 	private IBotConfigPropertiesService botConfigPropertiesService;
-	
+
 	@RequestMapping(value = "/bot-config-properties", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("ID", "Support Channel", "Welcome Channel", "Verified Role", "Moderator Role");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/bot-config-properties";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> botConfigPropertiesPage = botConfigPropertiesService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", botConfigPropertiesPage);
 
         int totalPages = botConfigPropertiesPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

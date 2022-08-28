@@ -13,15 +13,15 @@ import lombok.Getter;
 @Table(name = "ttc_harold_emoji")
 public class HaroldEmoji {
 
-	
+
 	@Id
 	@Getter
 	private int id;
-	
+
 	@Getter
 	@Column(name = "name", nullable = false)
 	private String name;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("HaroldEmoji{");
@@ -30,7 +30,7 @@ public class HaroldEmoji {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;

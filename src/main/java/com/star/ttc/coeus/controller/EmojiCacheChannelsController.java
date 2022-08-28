@@ -24,35 +24,35 @@ import com.star.ttc.coeus.interfaces.IEmojiCacheChannelsService;
 public class EmojiCacheChannelsController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmojiCacheChannelsController.class);
-	
+
 	@Autowired
 	private IEmojiCacheChannelsService emojiCacheChannelsService;
-	
+
 	@RequestMapping(value = "/emoji-cache-channels", method = RequestMethod.GET)
     public String indexPaginated(
-      Model model, 
-      @RequestParam("page") Optional<Integer> page, 
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        
+
         // TODO: write header on class fields
         List<String> tableHeaders = Arrays.asList("Channel ID", "Message ID", "Unix Timestamp");
-        
+
         model.addAttribute("tableHeaders", tableHeaders);
-        
+
         // TODO: get request mapping directly from annotation
         String requestMappingUrl = "/emoji-cache-channels";
-        
+
         model.addAttribute("requestMappingUrl", requestMappingUrl);
-        
-        
+
+
         Page<Map<String, Object>> emojiCacheChannelsPage = emojiCacheChannelsService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
 
         model.addAttribute("tablePage", emojiCacheChannelsPage);
 
         int totalPages = emojiCacheChannelsPage.getTotalPages();
-        
+
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()

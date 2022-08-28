@@ -22,33 +22,33 @@ import com.star.ttc.coeus.repositories.EasterEggGifsRepository;
 public class EasterEggGifsService extends MasterService implements IEasterEggGifsService {
 
 	private static final Logger logger = LoggerFactory.getLogger(EasterEggGifsService.class);
-	
+
 	@Autowired
 	private EasterEggGifsRepository repository;
-	
+
 	@Override
 	public List<EasterEggGifs> findAll() {
-		
+
 		List<EasterEggGifs> eggs = new ArrayList<>();
-		
+
 		try {
-			eggs = (List<EasterEggGifs>) repository.findAll();
-			
+			eggs = repository.findAll();
+
 			logger.info("Number of easter eggs: " + eggs.size());
-			
+
 		} catch(Exception ex) {
 			// TODO: handle exception
 		}
-		
+
 		return eggs;
 	}
-	
+
 	@Override
 	public Page<Map<String, Object>> findPaginated(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        
+
         List<Map<String, Object>> eggsMap = new ArrayList<>();
 		try {
 			eggsMap = getObjectList(repository);
@@ -56,9 +56,9 @@ public class EasterEggGifsService extends MasterService implements IEasterEggGif
 			logger.error("Failed to get object map");
 			logger.error(ex.toString());
 		}
-        
+
         logger.info("Number of easter eggs: " + eggsMap.size());
-        
+
         List<Map<String, Object>> list;
 
         if (eggsMap.size() < startItem) {
@@ -69,10 +69,10 @@ public class EasterEggGifsService extends MasterService implements IEasterEggGif
         }
 
         Page<Map<String, Object>> easterEggGifsPage
-          = new PageImpl<Map<String, Object>>(list, PageRequest.of(currentPage, pageSize), eggsMap.size());
+          = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), eggsMap.size());
 
         return easterEggGifsPage;
     }
-	
+
 
 }

@@ -14,15 +14,15 @@ import lombok.Getter;
 @Table(name = "ttc_webhooks")
 public class Webhooks {
 
-	
+
 	@Id
 	@Getter
 	private BigInteger channelId;
-	
+
 	@Getter
 	@Column(name = "webhook_url", nullable = false)
 	private String webhookUrl;
-	
+
 	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Wenhooks{");
@@ -31,7 +31,7 @@ public class Webhooks {
         sb.append('}');
         return sb.toString();
     }
-	
+
 	@Override
     public int hashCode() {
         int hash = 7;
